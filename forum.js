@@ -1,33 +1,37 @@
-e = require('express');
+express = require('express')
 fs = require('fs')
-nJ = require('nunjucks')
+nunjucks = require('nunjucks')
 
-s = e()
-t = fs.readFileSync(__dirname + '/forum.html', 'utf-8')
+server = express()
+template = fs.readFileSync(__dirname + '/forum.html', 'utf-8')
 
 data = {
   puppies: {
     topic: true,
-    title:'Puppies be cool',
-    message: [ 'Bad grammar', 'Thats not what the forums about', 'You have worse grammar', '(-_-)' ]
+    title: 'Puppies are cool!',
+    message: [
+      'nice pup',
+      'cool dog dude'
+    ]
   }
 }
 
-s.get('/', function (req, res) {
-  res.send(nJ.renderString(t, { topics: data }))
+// Get the homepage
+server.get('/', function(req, res) {
+  res.send( nunjucks.renderString(template, { topics: data }) )
 })
-
-s.get('/add', function (req, res) {
+// Adding a new topic to the homepage
+server.get('/add', function(req, res) {
 
 })
-
-s.get('/page/:id', function (req, res) {
+// Getting a particular discussion
+server.get('/page/:id', function(req, res) {
   id = req.params.id
-  res.send(nJ.renderString(t, data[id]))
+  res.send( nunjucks.renderString(template, data[id]) )
+})
+// Add a new message to the discussion
+server.get('/add/:id', function(req, res) {
+
 })
 
-s.get('/add/:id', function (req, res) {
-
-})
-
-s.listen(2222)
+server.listen(8888)
