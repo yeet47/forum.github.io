@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title> Forum </title>
+    <style media="screen">
+      a {
+        display: block;
+        font-size: 40px;
+        padding: 10px;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    {% if topics %}
+    <h1> Forum Topics </h1>
+    <form class="add" action="/add">
+      <input name="topic" placeholder="New Topic">
+      <input type="submit">
+    </form>
+    {% for key, value in topics %}
+    <a href="/page/{{key}}"> {{value.title}} </a>
+    {%  %}
+    <!--<a href="/page/kittens"> Kittens </a>-->
+    {% else %}
+      <h1>{{title}}</h1>
+      <form class="add" action="/add/">
+        <input name="topic" value="New Topic">
+        <input type="submit">
+      </form>
+      {% for mT in message %}
+      <p> {{mT}} </p>
+    {% endif %}
+  </body>
+</html>
